@@ -33,17 +33,10 @@ int main()
     for (Room& roomCurrent : rooms)
     {
         //연결될 방의 개수 : 1~3 개
-        int nextRoomCount = rand()%4 +1;
+        int nextRoomCount = 0;
         vector<Room*> nextRoomTemp;
         //연결될 방을 선택해야함
         //일단 세개 넣고 nextRoomCount 개수만큼 랜덤인덱스를 제거하면 될듯?
-        
-        //roomIndex -> rooms[0]
-        //nextRoomTemp.push_back( room[1], room[2] , room[3] )
-        
-        
-        //roomCurrent == rooms[1], rooms[2], rooms[3] 
-        //nextRoomTemp.push_back( room[4], room[5], room[6] )
         
         if (roomIndex >= 0 && roomIndex < 7)
         {
@@ -52,7 +45,28 @@ int main()
                 int temp = 3-(roomIndex+2)%3;
                 nextRoomTemp.push_back(&rooms[roomIndex + temp+i]);
             }
+            
+            nextRoomCount = rand()%4 +1;
+            int eraseIndex = 0;
+            switch (nextRoomCount)
+            {
+                
+            case 1:
+                eraseIndex = rand()%(nextRoomTemp.size()); // 0~3
+                nextRoomTemp.erase(nextRoomTemp.begin() + eraseIndex);
+            case 2:
+                eraseIndex = rand()%(nextRoomTemp.size()); // 0~2
+                nextRoomTemp.erase(nextRoomTemp.begin() + eraseIndex);
+            default:
+                cout << "error ! \n";        
+            }
+            
             roomCurrent.SetNextRoom(nextRoomTemp);
+            for (int nextRoomIndex = 0; nextRoomIndex < nextRoomTemp.size(); nextRoomIndex++)
+            {
+                nextRoomTemp[nextRoomIndex]->AddPreviousRoom(roomCurrent);
+            }
+            
         }
         
         else
@@ -71,8 +85,6 @@ int main()
     {
         roomCurrent.Test();
     }
-// 1  |  2 3 4 | 5 6 7 | 8 9 10 | 11
-    
     
     
     std::cout << "Hello MiniSampleMudGame" << std::endl;

@@ -7,7 +7,7 @@ class Room
 private:
     vector<Room*> previousRoom;
     vector<Room*> nextRoom;
-    int floor;
+    int floor;  
     bool isCleared;
 public:
     Room(int floor, bool isCleared = false);
@@ -23,5 +23,5 @@ public:
     void SetPreviousRoom(vector<Room*>&);
     void SetNextRoom(vector<Room*>&);
     
-    void AddPreviousRoom(Room*);
+    void AddPreviousRoom(Room&);
 };

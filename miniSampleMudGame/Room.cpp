@@ -24,10 +24,16 @@ void Room::Test()
         cout<< nextRoom[i]->GetFloor() << " ";
     }
     cout << "\n";
+    cout << "나의 이전 층 : ";
+    for (int i =0; i<previousRoom.size(); i++)
+    {
+        cout<< previousRoom[i]->GetFloor() << " ";
+    }
+    cout << "\n";
 }
 void Room::SetPreviousRoom(vector<Room*>& previous){previousRoom = previous;}
 void Room::SetNextRoom(vector<Room*>& next){nextRoom = next;}
 
-void Room::AddPreviousRoom(Room* previous){previousRoom.push_back(previous);}
+void Room::AddPreviousRoom(Room& previous){previousRoom.push_back(&previous);}
     
 
