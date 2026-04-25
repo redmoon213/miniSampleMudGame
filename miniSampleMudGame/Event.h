@@ -13,4 +13,5 @@ class Event
     public:
         Event(Room& currentRoom);
         void ChooseNextRoom();
+        void EnterRoom();
 };

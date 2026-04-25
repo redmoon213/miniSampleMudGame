@@ -26,9 +26,9 @@ public:
     bool IsCleared() const {return isCleared;}
     std::string GetName() const {return name;}
     
-    
+    int GetPreset() const {return preset;}
     void SetPreviousRoom(std::vector<Room*>&);
     void SetNextRoom(std::vector<Room*>&);
-    
+    void SetPreset(int);
     void AddPreviousRoom(Room&);
 };

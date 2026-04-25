@@ -6,10 +6,53 @@
 #include "Event.h"
 using namespace std;
 
+void resetCursor() {
+    cout << "\033[H";
+}
 
+void drawUI() {
+    // 설정값
+    const int WIDTH = 60;   // UI 전체 가로 폭
+    const int TOP_HEIGHT = 15; // 상단 영역 (배경/몬스터) 높이
+    const int BOT_HEIGHT = 6;  // 하단 영역 (로그) 높이
+
+    resetCursor();
+
+    // 1. 상단 테두리
+    cout << "┌";
+    for(int i=0; i<WIDTH; i++) cout << "─";
+    cout << "┐" << endl;
+
+    // 2. 상단 영역 (배경 & 몬스터 공간)
+    for(int i=0; i<TOP_HEIGHT; i++) {
+        cout << "│";
+        for(int j=0; j<WIDTH; j++) cout << " "; // 나중에 여기에 배경 출력
+        cout << "│" << endl;
+    }
+
+    // 3. 중간 구분선
+    cout << "├";
+    for(int i=0; i<WIDTH; i++) cout << "─";
+    cout << "┤" << endl;
+
+    // 4. 하단 영역 (텍스트 로그 공간)
+    for(int i=0; i<BOT_HEIGHT; i++) {
+        cout << "│";
+        for(int j=0; j<WIDTH; j++) cout << " "; // 나중에 여기에 로그 출력
+        cout << "│" << endl;
+    }
+
+    // 5. 하단 테두리
+    cout << "└";
+    for(int i=0; i<WIDTH; i++) cout << "─";
+    cout << "┘" << endl;
+}
 
 int main()
 {
+    
+    srand((unsigned int)time(NULL));    
+    
     int preset[10] = {NULL};
     //방의 프리셋 설정 
     vector<Room> rooms = {
@@ -25,8 +68,12 @@ int main()
         Room("9번방",3),
         Room("10번방",4)
     };
-    
-    srand((unsigned int)time(NULL));    
+    rooms[0].SetPreset(0);
+    for (int i =1; i<rooms.size()-1; i++)
+    {
+        rooms[i].SetPreset(rand()%4+1);
+    }
+    rooms[10].SetPreset(5);
     
     
     //방들을 서로 연결
@@ -83,7 +130,20 @@ int main()
     }
     
     
+    Event event(rooms[0]);
+   
+    //  while(!currentRoom.isCleared() || !player.isAlive())
+    //  event.battleOrEvent(currentroom, player, monsters)
+    //  event.reward(currentRoom, player)
+    //  event.chooseRoom(currentRoom)
+    //  
+    cout << "\033[2J"; 
+    drawUI();
+    
     std::cout << "Hello MiniSampleMudGame" << std::endl;
+    cout << "\033[20;3H"; 
+    int temp;
+    cin >> temp;
     return 0;
 }
     
