@@ -1,27 +1,34 @@
 ﻿#pragma once
 
 #include <vector>
-using namespace std;
+#include <string>
+
 class Room
 {
 private:
-    vector<Room*> previousRoom;
-    vector<Room*> nextRoom;
+    std::vector<Room*> previousRoom;
+    std::vector<Room*> nextRoom;
+    
+    std::string name;
+    int preset;
     int floor;  
     bool isCleared;
+    
 public:
-    Room(int floor, bool isCleared = false);
+    Room(std::string name, int floor, bool isCleared = false);
     ~Room();
     void Test();
     
-    vector<Room*> GetPreviousRoom() const {return previousRoom;}
-    vector<Room*> GetNextRoom() const {return nextRoom;}
+    std::vector<Room*> GetPreviousRoom() const {return previousRoom;}
+    std::vector<Room*> GetNextRoom() const {return nextRoom;}
     
     int GetFloor() const {return floor;}
     bool IsCleared() const {return isCleared;}
+    std::string GetName() const {return name;}
     
-    void SetPreviousRoom(vector<Room*>&);
-    void SetNextRoom(vector<Room*>&);
+    
+    void SetPreviousRoom(std::vector<Room*>&);
+    void SetNextRoom(std::vector<Room*>&);
     
     void AddPreviousRoom(Room&);
 };
