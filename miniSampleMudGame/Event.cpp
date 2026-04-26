@@ -110,7 +110,7 @@ void Event::Special(Player& player)
         if (healAmount + player.GetHp() > player.GetMaxHp())
             healAmount = player.GetMaxHp() - player.GetHp();
         cout << "회복의 샘이 당신을 치유합니다.\n";
-        cout << "Hp가 " << healAmount << "회복됩니다.";
+        cout << "Hp가 " << healAmount << "회복됩니다.\n";
         player.SetHp(player.GetHp() + healAmount );
         
         system("pause");
