@@ -111,25 +111,12 @@ int main()
     //drawUI();
     
     //cout << "\033[20;3H"; 
-    RenderManager renderer;
+    RenderManager ren;
     
-    const char* scene = R"(
-      ___                                       ___      
-   |  #    |            __      __           |    #  | 
-    \ ___ /            (  `-..-'  )           \ ___ /  
-      | |               \  o  o  /              | |    
-    --|-|--            _ \  --  / _           --|-|--  
-      | |             / \/`-..-`\/ \            | |    
-     /   \           (   / .--. \   )          /   \   
-    /     \          |  / /    \ \  |         /     \  
-   /       \         |_|_|      |_|_|        /       \ 
-  /_________\         /_/        \_\        /_________\
-      | |            //            \\           | |    
-      | |____________((____________))___________| |    )";
+   
     printf("\033[2;2H");
-    renderer.Initialize();
+    ren.Initialize();
     
-    renderer.DrawScene(scene);
     
     Event event(rooms[0]);
     Player player("플레이어", 10,10,10);
