@@ -31,4 +31,6 @@ public:
     void SetNextRoom(std::vector<Room*>&);
     void SetPreset(int);
     void AddPreviousRoom(Room&);
+    void SetName(std::string);
+    void setCleared();
 };

@@ -16,8 +16,9 @@ protected:
     
 public:
     Character(std::string name, int str, int dex, int intelligence);
-    ~Character();
+    virtual ~Character();
     
+    std::string GetName(){return name;}
     int GetStrength(){return strength;}
     int GetDexterity(){return dexterity;}
     int GetIntelligence(){return intelligence;}
@@ -27,11 +28,13 @@ public:
     int GetMp(){return mp;}
     int GetMaxMP(){return maxMp;}
     int GetDefense(){return defense;}
-    bool IsAlive(){return isAlive;}
+    bool IsAlive();
+    
+    void StatSetting();
     
     
-    void AttackNormal();
-    void AttackSkill();
-    void TakeDamage(int damage);
+    virtual void AttackNormal();
+    virtual void AttackSkill(); 
+    virtual void TakeDamage(int damage);
     
 };

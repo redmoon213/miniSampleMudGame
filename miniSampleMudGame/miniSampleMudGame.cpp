@@ -2,51 +2,15 @@
 #include <cstdlib>
 #include <vector>
 
+#include "Bandit.h"
 #include "Room.h"
 #include "Event.h"
+#include "Ghost.h"
+#include "MonsterFactory.h"
+#include "Orc.h"
+#include "Preset.h"
+#include "RanderManger.h"
 using namespace std;
-
-void resetCursor() {
-    cout << "\033[H";
-}
-
-void drawUI() {
-    // 설정값
-    const int WIDTH = 60;   // UI 전체 가로 폭
-    const int TOP_HEIGHT = 15; // 상단 영역 (배경/몬스터) 높이
-    const int BOT_HEIGHT = 6;  // 하단 영역 (로그) 높이
-
-    resetCursor();
-
-    // 1. 상단 테두리
-    cout << "┌";
-    for(int i=0; i<WIDTH; i++) cout << "─";
-    cout << "┐" << endl;
-
-    // 2. 상단 영역 (배경 & 몬스터 공간)
-    for(int i=0; i<TOP_HEIGHT; i++) {
-        cout << "│";
-        for(int j=0; j<WIDTH; j++) cout << " "; // 나중에 여기에 배경 출력
-        cout << "│" << endl;
-    }
-
-    // 3. 중간 구분선
-    cout << "├";
-    for(int i=0; i<WIDTH; i++) cout << "─";
-    cout << "┤" << endl;
-
-    // 4. 하단 영역 (텍스트 로그 공간)
-    for(int i=0; i<BOT_HEIGHT; i++) {
-        cout << "│";
-        for(int j=0; j<WIDTH; j++) cout << " "; // 나중에 여기에 로그 출력
-        cout << "│" << endl;
-    }
-
-    // 5. 하단 테두리
-    cout << "└";
-    for(int i=0; i<WIDTH; i++) cout << "─";
-    cout << "┘" << endl;
-}
 
 int main()
 {
@@ -54,7 +18,18 @@ int main()
     srand((unsigned int)time(NULL));    
     
     int preset[10] = {NULL};
-    //방의 프리셋 설정 
+    //방 생성 및 초기화 
+    vector<Preset> presets ={
+        Preset(0, "시작지점" ),
+        Preset(1, "보스방", "보스"),
+        Preset(2, "숲", "오크"),
+        Preset(3, "묘지", "유령"),
+        Preset(4, "빈민가", "도적"),
+        Preset(5, "치유의샘"),
+        Preset(6, "금고실")
+    };
+    
+    
     vector<Room> rooms = {
         Room("0번방",0),
         Room("1번방",1),
@@ -68,24 +43,28 @@ int main()
         Room("9번방",3),
         Room("10번방",4)
     };
-    rooms[0].SetPreset(0);
+    rooms[0].SetPreset(presets[0].GetPresetNumber());
+    rooms[0].SetName(presets[0].GetRoomName());
+    rooms[10].SetPreset(presets[1].GetPresetNumber());
+    rooms[10].SetName(presets[1].GetRoomName());
+    
     for (int i =1; i<rooms.size()-1; i++)
     {
-        rooms[i].SetPreset(rand()%4+1);
+        int presetNumber = presets[rand()%5+2].GetPresetNumber();
+        rooms[i].SetPreset(presetNumber);
+        rooms[i].SetName(presets[presetNumber].GetRoomName());
     }
-    rooms[10].SetPreset(5);
     
     
     //방들을 서로 연결
-    //참조자 쓸지 포인터쓸지 생각좀 잘 해보기
     int roomIndex = 0;
     for (Room& roomCurrent : rooms)
     {
         //연결될 방의 개수 : 1~3 개
         
         vector<Room*> nextRoomTemp;
-        //연결될 방을 선택해야함
-        //일단 세개 넣고 nextRoomCount 개수만큼 랜덤인덱스를 제거하면 될듯?
+        //연결될 방을 선택
+        //일단 세개 넣고 nextRoomCount 개수만큼 랜덤인덱스를 제거
         
         if (roomIndex >= 0 && roomIndex < 7)
         {
@@ -94,8 +73,6 @@ int main()
                 int temp = 3-(roomIndex+2)%3;
                 nextRoomTemp.push_back(&rooms[roomIndex + temp+i]);
             }
-            
-            
             
             int nextRoomCount = rand()%3 +1;  // 지울 방의 개수를 선택 1~3 : 셋중 하나
             int eraseIndex = 0;
@@ -130,20 +107,46 @@ int main()
     }
     
     
-    Event event(rooms[0]);
-   
-    //  while(!currentRoom.isCleared() || !player.isAlive())
-    //  event.battleOrEvent(currentroom, player, monsters)
-    //  event.reward(currentRoom, player)
-    //  event.chooseRoom(currentRoom)
-    //  
-    cout << "\033[2J"; 
-    drawUI();
+    //cout << "\033[2J"; 
+    //drawUI();
     
-    std::cout << "Hello MiniSampleMudGame" << std::endl;
-    cout << "\033[20;3H"; 
-    int temp;
-    cin >> temp;
+    //cout << "\033[20;3H"; 
+    RenderManager renderer;
+    
+    const char* scene = R"(
+      ___                                       ___      
+   |  #    |            __      __           |    #  | 
+    \ ___ /            (  `-..-'  )           \ ___ /  
+      | |               \  o  o  /              | |    
+    --|-|--            _ \  --  / _           --|-|--  
+      | |             / \/`-..-`\/ \            | |    
+     /   \           (   / .--. \   )          /   \   
+    /     \          |  / /    \ \  |         /     \  
+   /       \         |_|_|      |_|_|        /       \ 
+  /_________\         /_/        \_\        /_________\
+      | |            //            \\           | |    
+      | |____________((____________))___________| |    )";
+    printf("\033[2;2H");
+    renderer.Initialize();
+    
+    renderer.DrawScene(scene);
+    
+    Event event(rooms[0]);
+    Player player("플레이어", 10,10,10);
+   
+    while (player.IsAlive() && rooms[10].IsCleared() != true)
+    {
+        event.EnterRoom();  
+        Monster* monsterTemp = MonsterFactory::GenerateMonster(event.GetPreset());
+        
+        if (!event.IsCleard())
+        event.Battle(player, monsterTemp );
+        delete monsterTemp;
+        
+        if (!player.IsAlive())break;
+        event.ChooseNextRoom();
+    }
+    cout<<"종료!\n";
     return 0;
 }
     

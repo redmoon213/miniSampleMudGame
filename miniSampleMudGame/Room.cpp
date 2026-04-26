@@ -40,3 +40,12 @@ void Room::SetPreset(int newPreset)
     preset = newPreset;
 }
 
+void Room::SetName(std::string newName)
+{
+    name = newName;
+}
+
+void Room::setCleared()
+{
+    isCleared = true;
+}
