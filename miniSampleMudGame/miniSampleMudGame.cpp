@@ -127,9 +127,14 @@ int main()
         Monster* monsterTemp = MonsterFactory::GenerateMonster(event.GetPreset());
         
         if (!event.IsCleard())
-        event.Battle(player, monsterTemp );
+        {
+            if (event.GetPreset() >0 && event.GetPreset() <5)
+            event.Battle(player, monsterTemp );
+            
+            else if (event.GetPreset() < 7)
+                event.Special(player);
+        }
         delete monsterTemp;
-        
         if (!player.IsAlive())break;
         event.ChooseNextRoom();
     }

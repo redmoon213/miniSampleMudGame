@@ -46,31 +46,13 @@ void Event::EnterRoom()
     case 6: rm.DrawScene(sceneVault);break;
     }
     rm.ClearLog();
-    if (currentRoom->GetPreset() == 0)
-    {
-    }
-    
-    else if (currentRoom->GetPreset()  == 1)
-    {
-        
-    }
-    
-    else if (1<currentRoom->GetPreset() && currentRoom->GetPreset() <5)
-    {
-       
-    }
-    
-    else if (currentRoom->GetPreset() >= 5)
-    {
-       
-    }
     
 }
 
 void Event::Battle(Player& player, Monster* monster)
 {
     int logCount =0;
-  
+    
     if (monster == nullptr)
         return;
     rm.ClearLog();
@@ -81,18 +63,18 @@ void Event::Battle(Player& player, Monster* monster)
         rm.ClearLog();
         
         // 플레이어와 몬스터의 체력 상태, 그리고 행동 선택지를 한 줄로 합칩니다.
-        string statusMsg = player.GetName() + "(" + to_string(player.GetHp()) + ") vs " + 
+        string statusMsg = player.GetName() + "(" + to_string(player.GetHp()) + "|" +to_string(player.GetMp()) + ") vs " + 
                            monster->GetName() + "(" + to_string(monster->GetHp()) + ") | 1.공격 2.스킬 3.아이템";
                            
-        rm.DrawLog(statusMsg);
+        cout << (statusMsg) <<"\n";
         
         cin>>playerInput;
         switch (playerInput)
         {
-        case 1: monster->TakeDamage(player.GetAttackDamage()); break;
+        case 1: monster->TakeDamage(player.AttackNormal()); break;
         case 2: //monster->TakeDamage(player.UsingSkills()); break;
-        case 3: //using item
-            ;
+        case 3: monster->TakeDamage(player.UsingItem()); break;
+            
         }
         
         if (monster->IsAlive())
@@ -113,6 +95,39 @@ void Event::Battle(Player& player, Monster* monster)
         rm.ClearLog();
         currentRoom->setCleared();
         player.GainExp(monster->GetExpReward());
+        
+        player.Loot(monster->GetItemReward());
+        system("pause");
+    }
+}
+
+void Event::Special(Player& player)
+{
+    switch (currentRoom->GetPreset())
+    {
+    case 5: {
+        int healAmount = player.GetMaxHp() / 5;
+        if (healAmount + player.GetHp() > player.GetMaxHp())
+            healAmount = player.GetMaxHp() - player.GetHp();
+        cout << "회복의 샘이 당신을 치유합니다.\n";
+        cout << "Hp가 " << healAmount << "회복됩니다.";
+        player.SetHp(player.GetHp() + healAmount );
+        
+        system("pause");
+        break;
+    }
+    case 6:
+        {
+            cout << "금고실입니다.쓸만한 아이템이 있을지 모릅니다.\n";
+            srand(time(NULL));
+            int itemCount = rand()%3+1;
+            for (int i = 0; i<itemCount; i++ )
+            {
+                player.Loot(rand()%4+1);
+            }
+            system("pause");
+            break;
+        }
     }
 }
 

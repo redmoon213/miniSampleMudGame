@@ -8,6 +8,7 @@ private:
     std::string roomName;
     std::string monsterName;
     
+    
 public:
     Preset(int presetNumber, std::string roomName, std::string monsterName = "");
     ~Preset();

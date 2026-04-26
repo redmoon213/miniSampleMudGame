@@ -19,9 +19,9 @@ bool Character::IsAlive()
     return hp>0;
 }
 
-void Character::AttackNormal()
+int Character::AttackNormal()
 {
-    TakeDamage(attackDamage);
+    return attackDamage;
 }
 
 void Character::AttackSkill()
@@ -40,4 +40,9 @@ void Character::StatSetting()
     attackDamage = strength * 2;
     maxHp = strength * 20;
     maxMp = intelligence * 10;
+}
+
+void Character::SetHp(int amount)
+{
+    hp = amount;
 }

@@ -9,8 +9,8 @@ protected:
     int preset;
     std::vector<int> itemReward;
 public:
-    Monster(std::string name, int str, int dex, int intelligence, int expReward, int itemReward);
+    Monster(std::string name, int str, int dex, int intelligence, int expReward, std::vector<int> itemReward);
     virtual ~Monster();
     virtual int GetExpReward(){return expReward;}
-    
+    virtual std::vector<int> GetItemReward(){return itemReward;}
 };

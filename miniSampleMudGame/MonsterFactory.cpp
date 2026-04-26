@@ -1,11 +1,12 @@
 ﻿#include "MonsterFactory.h"
-
+#include "Orc.h"
+#include "Ghost.h"
+#include "Bandit.h"
 #include "LastBoss.h"
 
 Monster* MonsterFactory::GenerateMonster(int preset)
 {
         switch (preset){
-        case 0: return nullptr;
         case 1: return new LastBoss();
         case 2: return new Orc();
         case 3: return new Ghost();

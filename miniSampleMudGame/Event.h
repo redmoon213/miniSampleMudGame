@@ -118,6 +118,7 @@ class Event
         void ChooseNextRoom();
         void EnterRoom();
         void Battle(Player& player, Monster* monster);
+        void Special(Player& player);
         bool IsCleard() const {return currentRoom->IsCleared();}
         int GetPreset();
 };

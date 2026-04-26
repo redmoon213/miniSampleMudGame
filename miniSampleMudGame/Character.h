@@ -32,8 +32,8 @@ public:
     
     void StatSetting();
     
-    
-    virtual void AttackNormal();
+    void SetHp(int amount);
+    virtual int AttackNormal();
     virtual void AttackSkill(); 
     virtual void TakeDamage(int damage);
     

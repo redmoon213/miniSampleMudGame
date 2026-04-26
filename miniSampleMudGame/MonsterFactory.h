@@ -1,8 +1,5 @@
 ﻿#pragma once
 #include "Monster.h"
-#include "Orc.h"
-#include "Bandit.h"
-#include "Ghost.h"
 
 class MonsterFactory
 {
