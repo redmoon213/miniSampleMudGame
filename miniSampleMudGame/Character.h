@@ -6,9 +6,14 @@ class Character
 {
 protected:
     std::string name;
-    int strength, dexterity, intelligence;
+    int strength, dexterity, intelligence;  //str-체력, 일반공격력 , dex-기술 쿨타임, 회피율, int-마나, 마나회복
     int attackDamage, hp, maxHp, mp, maxMp;
     //int criticalChance;
+    
+    float skillCooldown;
+    float hpRegen;
+    float mpRegen;
+    
     int defense;    
     bool isAlive;
     
