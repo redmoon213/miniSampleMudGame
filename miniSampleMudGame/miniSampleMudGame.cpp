@@ -11,6 +11,8 @@ using namespace std;
 
 int main()
 {
+    
+    
     srand((unsigned int)time(NULL));
     //방 생성 및 초기화 
     vector<Preset> presets ={                        //각 방에 부여해줄 프리셋을 미리 지정
@@ -90,6 +92,7 @@ int main()
             for (int nextRoomIndex = 0; nextRoomIndex < nextRoomTemp.size(); nextRoomIndex++)
             {
                 nextRoomTemp[nextRoomIndex]->AddPreviousRoom(roomCurrent);
+                
             }
         }
         
@@ -112,8 +115,6 @@ int main()
     
     Event event(rooms[0]);
     Player player("플레이어", 10,10,10);
-   
-    
     while (player.IsAlive() && !rooms[10].IsCleared())
     {
         event.EnterRoom(); // 방 입장   
@@ -128,6 +129,7 @@ int main()
                 event.Special(player);
         }
         delete monsterTemp;  // 몬스터 객체 파괴
+        monsterTemp = nullptr;
         
         if (!player.IsAlive() || rooms[10].IsCleared())break; 
         

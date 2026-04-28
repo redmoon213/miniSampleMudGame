@@ -3,6 +3,8 @@
 #include "Character.h"
 #include <iostream>
 
+#include "Inventory.h"
+
 class Player : public Character
 {
 private:
@@ -11,6 +13,7 @@ private:
     int maxExp;
     std::vector<int> inventory;
     std::vector<std::string> itemList;
+    std::vector<Inventory> newInventory;
 public:
     Player(std::string name, int str, int dex, int intelligence, int level = 1);
     void GainExp(int exp);

@@ -12,6 +12,8 @@ class Event
     private:
         Room* currentRoom;
         RenderManager rm;
+    
+    
     const char* sceneGhost = R"(
  ==================== [   묘지    ] ======================
  ||    ____                                         ____||
