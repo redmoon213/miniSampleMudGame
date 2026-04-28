@@ -158,7 +158,8 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Ghost.cpp" />
-    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemConsumable.cpp" />
     <ClCompile Include="LastBoss.cpp" />
     <ClCompile Include="miniSampleMudGame.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -174,7 +175,8 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Ghost.h" />
-    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemConsumable.h" />
     <ClInclude Include="LastBoss.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterFactory.h" />

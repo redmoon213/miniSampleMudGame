@@ -33,12 +33,23 @@ void Player::LevelUp()
         std::cout <<"\033[J";
         switch (input)
         {
-        case 1: strength ++;break;
-        case 2: dexterity ++;break;
-        case 3: intelligence ++;break;
+        case 1: 
+            strength ++; 
+            std::cout<< "힘 " << strength-1 << "->" << strength << "\n"; 
+            break;
+        case 2: 
+            dexterity ++;
+            std::cout<< "민첩 " << dexterity-1 << "->" << dexterity << "\n"; 
+            break;
+        case 3: 
+            intelligence++;
+            std::cout<< "지능 " << intelligence-1 << "->" << intelligence << "\n"; 
+            break;
         }
+        
         printf("\033[19;1H\033[J");
     }
+    
     StatSetting();
     hp=maxHp;
 }
@@ -71,14 +82,75 @@ void Player::Loot(int rewardItem)
     
 }
 
+void Player::Loot(std::unique_ptr<Item> rewardItem)
+{
+    if (rewardItem != nullptr)
+    {
+        newInventory.push_back(*rewardItem);
+        std::cout << "아이템을 획득하였습니다!\n";
+        std::cout<< rewardItem->GetItemName() <<"\n";
+    }
+}
+
+
+
 int Player::UsingItem()
 {
     int outputCount = 1;
-    int itemCount = 0;
     int input =0;
     int damage = 0;
     std::vector<int> temp;
     std::cout << ">>사용할 아이템을 입력해주세요.\n";
+    
+    std::vector<std::vector<int>> itemcodeList;
+    newInventory.push_back(*std::make_unique<Item>(1,"돌맹이", ItemType::CONSUMABLE));
+    newInventory.push_back(*std::make_unique<Item>(2,"사과", ItemType::CONSUMABLE));
+    newInventory.push_back(*std::make_unique<Item>(3,"투척단검", ItemType::CONSUMABLE));
+    newInventory.push_back(*std::make_unique<Item>(2,"사과", ItemType::CONSUMABLE));
+    newInventory.push_back(*std::make_unique<Item>(1,"돌맹이", ItemType::CONSUMABLE));
+    int countConsumable =0;
+    //for (int logIndex = 1; )
+    for (int inventoryIndex = 0; inventoryIndex < newInventory.size(); inventoryIndex++)
+    {
+        if (newInventory[inventoryIndex].GetItemType() == ItemType::CONSUMABLE)
+        {
+            bool itemCount = false;
+             for (int i =0; i< itemcodeList.size(); i++)
+             {
+                 if (newInventory[inventoryIndex].GetItemCode() == itemcodeList[i][0])
+                 {
+                     itemcodeList[i][1]++;
+                     itemCount = true;
+                 }
+                 
+             }
+            if (itemCount == false)
+            {
+                itemcodeList.push_back({newInventory[inventoryIndex].GetItemCode(), 1});
+            }
+        }
+    }
+    
+    for (int i =0; i<itemcodeList.size(); i++)
+    {   std::string itemNameTemp; 
+       for (int j =0; j<newInventory.size(); j++)
+       {
+           if (itemcodeList[i][0] == newInventory[j].GetItemCode())
+           {
+               itemNameTemp = newInventory[j].GetItemName();
+               break;
+           }
+       }
+        std::cout << i + 1 << "_ " << itemNameTemp << " X " << itemcodeList[i][1] << "\n"; 
+    }
+    ///숏소스 돌맹이 나무부메랑 천갑옷 나무부메랑 돌맹이 돌반지 투척단검 돌맹이 투척단검 투척단검 돌맹이 
+    ///1_ 돌맹이 x 4
+    ///2_ 나무부메랑 x 2
+    ///3_ 투척단검 x 3
+    ///
+    
+    
+    
     
     for (int inventoryIndex =0; inventoryIndex<inventory.size(); inventoryIndex++)
     {
@@ -105,6 +177,8 @@ int Player::UsingItem()
         }
     }
     std::cin >> input;
+    
+    NewUsingItem(*this, newInventory[0]);
     if (temp[input-1] != 0)
     {
         switch (temp[input-1])
@@ -119,3 +193,7 @@ int Player::UsingItem()
     return damage;
 }
 
+void Player::NewUsingItem(Player& a, Item& b)
+{
+    b.UsingItem();
+}
