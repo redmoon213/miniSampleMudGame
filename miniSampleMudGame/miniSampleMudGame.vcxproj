@@ -170,6 +170,7 @@
     <ClCompile Include="Preset.cpp" />
     <ClCompile Include="RanderManger.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="UserSkills.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bandit.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Preset.h" />
     <ClInclude Include="RanderManger.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="UserSkills.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

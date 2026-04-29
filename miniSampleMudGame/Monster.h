@@ -4,9 +4,8 @@
 
 enum class monsterType
 {
-    ORC, GHOST, BANDIT, LASTBOSS,
-    
-    MAXCOUNT
+    ORC, GHOST, BANDIT, 
+    LASTBOSS
 };
 class Monster : public Character
 {

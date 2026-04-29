@@ -12,9 +12,6 @@ using namespace std;
 
 int main()
 {
-    
-   
-    
     srand((unsigned int)time(NULL));
     //방 생성 및 초기화 
     vector<Preset> presets ={                        //각 방에 부여해줄 프리셋을 미리 지정
@@ -120,16 +117,12 @@ int main()
     Event event(rooms[0]);
     Player player("플레이어", 10,10,10);
     
-    
-    
     Maps mapTest(presets[0]);
-    
-    
-    
-    mapTest.Battle(player);
-    if (player.IsAlive()){mapTest.EnterNextRoom();}
-    
-    
+    while (player.IsAlive() && !mapTest.IsCleared())
+    {
+        mapTest.Battle(player);
+        if (player.IsAlive()){mapTest.EnterNextRoom();}
+    }
     
     while (player.IsAlive() && !rooms[10].IsCleared())
     {
@@ -149,7 +142,6 @@ int main()
         
         event.ChooseNextRoom(); // 다음 방 선택 후 이동
     }
-    
     
     cout<<"종료!\n";
     return 0;
