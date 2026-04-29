@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <memory>
 #include <vector>
 #include <string>
 
@@ -8,6 +9,9 @@ class Room
 private:
     std::vector<Room*> previousRoom;
     std::vector<Room*> nextRoom;
+    
+    //std::unique_ptr<Room> nextRoomTemp;
+    //std::unique_ptr<Room> previousRoomTemp;
     
     std::string name;
     int preset;
@@ -33,4 +37,5 @@ public:
     void AddPreviousRoom(Room&);
     void SetName(std::string);
     void setCleared();
+    void AddNextRoom(std::unique_ptr<Room>);
 };

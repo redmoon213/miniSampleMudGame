@@ -4,16 +4,19 @@
 #include "Preset.h"
 #include "Room.h"
 
-class Map
+class Maps
 {
 private:
-    std::unique_ptr<Room> myRoom;
+    std::vector<std::unique_ptr<Room>> rooms;
+    //Room* currentRoom;
+    int roomIndex;
     Preset presets;
     
 public:
-    Map(Preset&);
-    
+    Maps(Preset&);
+    void EnterNextRoom();
     void Battle(Player&);
+    
     void Event();
     void MapOpen();
 };

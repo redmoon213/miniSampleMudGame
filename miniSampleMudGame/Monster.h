@@ -1,6 +1,13 @@
 ﻿#pragma once
 #include "Character.h"
 #include<vector>
+
+enum class monsterType
+{
+    ORC, GHOST, BANDIT, LASTBOSS,
+    
+    MAXCOUNT
+};
 class Monster : public Character
 {
     

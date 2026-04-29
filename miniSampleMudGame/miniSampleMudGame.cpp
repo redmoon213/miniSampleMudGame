@@ -4,6 +4,7 @@
 
 #include "Room.h"
 #include "Event.h"
+#include "Maps.h"
 #include "MonsterFactory.h"
 #include "Preset.h"
 #include "RanderManger.h"
@@ -12,6 +13,7 @@ using namespace std;
 int main()
 {
     
+   
     
     srand((unsigned int)time(NULL));
     //방 생성 및 초기화 
@@ -24,6 +26,7 @@ int main()
         Preset(5, "치유의샘"),
         Preset(6, "금고실")
     };
+    
     
     vector<Room> rooms = {                          // 방에 층수를 부여해서 생성
         Room("0번방",0),
@@ -113,23 +116,34 @@ int main()
     printf("\033[2;2H");
     ren.Initialize();
     
+    
     Event event(rooms[0]);
     Player player("플레이어", 10,10,10);
+    
+    
+    
+    Maps mapTest(presets[0]);
+    
+    
+    
+    mapTest.Battle(player);
+    if (player.IsAlive()){mapTest.EnterNextRoom();}
+    
+    
+    
     while (player.IsAlive() && !rooms[10].IsCleared())
     {
         event.EnterRoom(); // 방 입장   
-        Monster* monsterTemp = MonsterFactory::GenerateMonster(event.GetPreset()); // 방의 프리셋에 해당되는 몬스터 생성
+        unique_ptr<Monster> monsterTemp = MonsterFactory::GenerateMonster(monsterType::ORC); // 방의 프리셋에 해당되는 몬스터 생성
         
         if (!event.IsCleard()) // 방이 클리어되지 않은 상태라면 프리셋을 체크해서 전투 or 이벤트 진입
         {
-            if (event.GetPreset() >0 && event.GetPreset() <5)
-            event.Battle(player, monsterTemp );
+            if (event.GetPreset() >0 && event.GetPreset() <5);
+            //event.Battle(player, monsterTemp );
             
             else if (event.GetPreset() < 7)
                 event.Special(player);
         }
-        delete monsterTemp;  // 몬스터 객체 파괴
-        monsterTemp = nullptr;
         
         if (!player.IsAlive() || rooms[10].IsCleared())break; 
         

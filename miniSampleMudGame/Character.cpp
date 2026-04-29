@@ -14,7 +14,7 @@ name(name), strength(str), dexterity(dex), intelligence(intel)
 
 Character::~Character(){}
 
-bool Character::IsAlive()
+bool Character::IsAlive() const
 {
     return hp>0;
 }

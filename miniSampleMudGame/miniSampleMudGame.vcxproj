@@ -161,7 +161,7 @@
     <ClCompile Include="Hideout.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="LastBoss.cpp" />
-    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Maps.cpp" />
     <ClCompile Include="miniSampleMudGame.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterFactory.cpp" />
@@ -179,7 +179,7 @@
     <ClInclude Include="Hideout.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="LastBoss.h" />
-    <ClInclude Include="Map.h" />
+    <ClInclude Include="Maps.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="MonsterFactory.h" />
     <ClInclude Include="Orc.h" />

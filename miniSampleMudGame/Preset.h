@@ -8,6 +8,7 @@ private:
     std::string roomName;
     std::string monsterName;
     
+    int mapSize;
     
 public:
     Preset(int presetNumber, std::string roomName, std::string monsterName = "");
@@ -16,5 +17,5 @@ public:
     int GetPresetNumber(){return presetNumber;}
     std::string GetRoomName(){return roomName;}
     std::string GetMonsterName(){return monsterName;}
-    
+    int GetMapSize() const {return mapSize;}
 };

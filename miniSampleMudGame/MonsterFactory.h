@@ -1,4 +1,6 @@
 ﻿#pragma once
+#include <memory>
+
 #include "Monster.h"
 
 class MonsterFactory
@@ -6,6 +8,6 @@ class MonsterFactory
 public:
     MonsterFactory();
     
-    static Monster* GenerateMonster(int);
+    static std::unique_ptr<Monster> GenerateMonster(monsterType);
    
 };

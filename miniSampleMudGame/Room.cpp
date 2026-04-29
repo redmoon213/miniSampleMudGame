@@ -34,3 +34,8 @@ void Room::setCleared()
 {
     isCleared = true;
 }
+
+void Room::AddNextRoom(std::unique_ptr<Room>nextRoomInput)
+{
+   
+}

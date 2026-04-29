@@ -4,14 +4,15 @@
 #include "Bandit.h"
 #include "LastBoss.h"
 
-Monster* MonsterFactory::GenerateMonster(int preset)
+std::unique_ptr<Monster> MonsterFactory::GenerateMonster(monsterType mType)
 {
-        switch (preset){
-        case 1: return new LastBoss();
-        case 2: return new Orc();
-        case 3: return new Ghost();
-        case 4: return new Bandit();
-        default: return nullptr;        
+        switch (mType)
+        {
+        case monsterType::LASTBOSS : return std::make_unique<LastBoss>();
+        case monsterType::ORC: return std::make_unique<Orc>();
+        case monsterType::GHOST: return std::make_unique<Ghost>();
+        case monsterType::BANDIT: return std::make_unique<Bandit>();
+        default: return nullptr;
         }
         
 }

@@ -23,17 +23,17 @@ public:
     Character(std::string name, int str, int dex, int intelligence);
     virtual ~Character();
     
-    std::string GetName(){return name;}
-    int GetStrength(){return strength;}
-    int GetDexterity(){return dexterity;}
-    int GetIntelligence(){return intelligence;}
-    int GetAttackDamage(){return attackDamage;}
-    int GetHp(){return hp;}
-    int GetMaxHp(){return maxHp;}
-    int GetMp(){return mp;}
-    int GetMaxMP(){return maxMp;}
-    int GetDefense(){return defense;}
-    bool IsAlive();
+    std::string GetName() const {return name;}
+    int GetStrength() const {return strength;}
+    int GetDexterity() const {return dexterity;}
+    int GetIntelligence() const {return intelligence;}
+    int GetAttackDamage() const {return attackDamage;}
+    int GetHp() const {return hp;}
+    int GetMaxHp() const {return maxHp;}
+    int GetMp() const {return mp;}
+    int GetMaxMP() const {return maxMp;}
+    int GetDefense() const {return defense;}
+    bool IsAlive() const;
     
     void StatSetting();
     
