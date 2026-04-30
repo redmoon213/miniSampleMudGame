@@ -19,6 +19,7 @@ Maps::Maps(Preset& presetInput, bool isclear):presets(presetInput), clearCheck(i
 
 void Maps::Battle(Player& player)
 {
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::vector<std::unique_ptr<Monster>> monsters;
     
     //set monster numb, get preset, 1~3
@@ -44,33 +45,34 @@ void Maps::Battle(Player& player)
         //preset, choose monster 
         
     }
-    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     
     while (player.IsAlive() && monsters.size() !=0 )
     {
         system("cls");
         Display(monsters,player);
-        /*
-        for (auto& check : monsters)
+        player.Cooling();
+        
+        int target = rand()%monsters.size();
+       
+        //player skill check
+        if (player.CheckSkillCooldown())
         {
-            std::cout << check->GetName() << " :: " << check->GetHp()  << "\n";
+            monsters[target]->TakeDamage(player.ActivateSkill());
+            
+            std::cout<<"[Test::PlayerSkill Active]\n";
+            
+            Sleep(500);
         }
         
         
-        //player hp mp skill cooldonw.. 
-        std::cout<< player.GetName() << " :: " << player.GetHp() << " | " << player.GetMp() << "\n";
-        */
-        //player attack
-        int target = rand()%monsters.size();
-        monsters[target]->TakeDamage(player.AttackNormal());
-        
-        
         //log
-        Sleep(700);
+        
+        monsters[target]->TakeDamage(player.AttackNormal());
         std::cout<< player.GetName() << "가 " << monsters[target]->GetName() << "에게 " 
                  << player.GetAttackDamage() <<"만큼의 피해를 입혔습니다! \n";
         
-        Sleep(700);
+        //Sleep(700);
         
         //target monster isalive check  
         if (!monsters[target]->IsAlive())
@@ -91,7 +93,7 @@ void Maps::Battle(Player& player)
                 player.TakeDamage(check->AttackNormal());
                 std::cout << check->GetName() <<"가 " << player.GetName() << "에게 " 
                     << check->GetAttackDamage() << "만큼의 피해를 입혔습니다!. \n";
-                Sleep(700);
+               // Sleep(700);
             }
         }
           
@@ -103,12 +105,10 @@ void Maps::Battle(Player& player)
             //exp
         }
         Sleep(700);
-        //log
         
-        //system("pause");
+        //log
         //Sleep(700);
     }
-    
     
 }
 
@@ -120,10 +120,16 @@ void Maps::EnterNextRoom()
 
 void Maps::Display(std::vector<std::unique_ptr<Monster>>& monster, Player& player) const
 {
-    for (auto& test : monster)
+    for (const auto& test : monster)
     {
         std::cout << test->GetName() << " :: " << test->GetHp()  << "\n";
     }
     
     std::cout << player.GetName() << " :: " << player.GetHp() << "\n";
+    
+    for (const auto& it : player.GetSkillList())
+    {
+        std::cout<< it.GetName() << "(" << it.GetCurrentCooltime() << ")\n";
+    }
+    
 }

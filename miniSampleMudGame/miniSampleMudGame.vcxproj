@@ -160,10 +160,13 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Hideout.cpp" />
     <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="ItemDB.cpp" />
+    <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="LastBoss.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="miniSampleMudGame.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MonsterDB.cpp" />
     <ClCompile Include="MonsterFactory.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -171,6 +174,7 @@
     <ClCompile Include="RanderManger.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="UserSkills.cpp" />
+    <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bandit.h" />
@@ -179,16 +183,21 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Hideout.h" />
     <ClInclude Include="Inventory.h" />
+    <ClInclude Include="ItemDB.h" />
+    <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="LastBoss.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterDB.h" />
     <ClInclude Include="MonsterFactory.h" />
+    <ClInclude Include="MonsterType.h" />
     <ClInclude Include="Orc.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Preset.h" />
     <ClInclude Include="RanderManger.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="UserSkills.h" />
+    <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

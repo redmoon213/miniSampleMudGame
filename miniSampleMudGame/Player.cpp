@@ -1,11 +1,9 @@
 ﻿#include "Player.h"
 
 Player::Player(std::string name, int str, int dex, int intel, int lv)
-    :Character(name, str, dex, intel), level(lv), exp(0)
+    :Character(name, str, dex, intel), level(lv), exp(0), maxExp(level*50)
 {
-    maxExp = level * 50;
-    itemList = {"", "좋은 몽둥이", "돌맹이", "영혼불꽃", "투척 나이프" };
-    inventory = {0, 0, 1, 0, 0, 0};
+    skillList.push_back(UserSkills());
     
 }
 
@@ -64,10 +62,10 @@ void Player::Loot(std::vector<int> rewardItem)
 }
 
 void Player::Loot(int rewardItem)
-{
+{/*
     inventory[rewardItem]++;
     std::cout << "아이템을 획득하였습니다!\n";
-    std::cout<< itemList[rewardItem] << "\n";
+    std::cout<< itemList[rewardItem] << "\n";*/
     
 }
 
@@ -119,3 +117,33 @@ int Player::UsingItem()
     return damage;
 }
 
+void Player::Cooling()
+{
+    for (auto& it: skillList)
+    {
+        it.DecreaseCooltime();
+    }
+}
+
+bool Player::CheckSkillCooldown()
+{
+    for (const auto& it : skillList)
+    {
+        if (it.IsReady()) return true;
+    }
+    
+    return false;
+}
+
+int Player::ActivateSkill()
+{
+   for (auto& it : skillList)
+   {
+       if (it.IsReady())
+       {
+           it.SetCurrentCooltime(it.GetBaseCooltime());
+           return it.GetDamage();
+       }
+   }
+    return 0;
+}

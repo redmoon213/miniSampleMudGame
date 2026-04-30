@@ -8,6 +8,13 @@ Monster::Monster(std::string newName, int str, int dex, int intel, int exp, std:
     itemReward.push_back(item);
 }
 
+
+Monster::Monster(MonsterDB db)
+    :Character(db.name, db.str, db.dex, db.vit)
+{
+    
+}
+
 Monster::~Monster(){}
 
 

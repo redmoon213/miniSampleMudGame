@@ -1,12 +1,8 @@
 ﻿#pragma once
-#include "Character.h"
+#include"Character.h"
 #include<vector>
+#include "MonsterDB.h"
 
-enum class monsterType
-{
-    ORC, GHOST, BANDIT, 
-    LASTBOSS
-};
 class Monster : public Character
 {
     
@@ -15,6 +11,7 @@ protected:
     int preset;
     std::vector<int> itemReward;
 public:
+    Monster(MonsterDB);
     Monster(std::string name, int str, int dex, int intelligence, int expReward, std::vector<int> itemReward);
     virtual ~Monster();
     virtual int GetExpReward(){return expReward;}
