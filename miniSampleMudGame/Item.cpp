@@ -1,8 +1,10 @@
 ﻿#include "Item.h"
 
+#include "ItemDB.h"
 
-Item::Item(std::string nameInput, ItemType typeInput)
-    :name(nameInput), type(typeInput)
+
+Item::Item(ItemDB db)
+    :name(db.name), type(db.type), skillName(db.skillName)
 {
     
 }

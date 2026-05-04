@@ -22,9 +22,8 @@ private:
     int level;
     int exp;
     int maxExp;
-    std::vector<int> inventory;
     std::vector<std::string> itemList;
-    std::vector<Inventory> newInventory;
+    std::vector<Item*> inventory;
     std::vector<UserSkills> skillList;
     std::array<Item*, static_cast<int>(EquipSlot::Max)> equipment;
     
@@ -45,9 +44,14 @@ public:
     std::array<Item*,static_cast<int>(EquipSlot::Max)>GetEquipment(){return equipment;}
     
     
+    void Equip();
+    
     
     void Loot(std::vector<int> rewardItem);
     void Loot(int rewardItem);
     
     //void Equip();
+    
+    int GetEquipIndex(EquipSlot slot, int visualIndex);
+    
 };

@@ -11,7 +11,8 @@ struct SkillDB
     
     int baseCooltime;
     
+    
+    static std::unordered_map<std::string, SkillDB> CreateSkillDB();
+    
 };
 
-
-std::unordered_map<std::string, SkillDB> CreateSkillDB();

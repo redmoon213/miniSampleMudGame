@@ -1,7 +1,7 @@
 ﻿#include "SkillDB.h"
 
 
-std::unordered_map<std::string, SkillDB> CreateSkillDB()
+std::unordered_map<std::string, SkillDB>SkillDB:: CreateSkillDB()
 {
     std::unordered_map<std::string, SkillDB> db;
     

@@ -145,6 +145,7 @@ void Hideout::CharacterStatus()
     switch (input)
     {
     case 1:
+        player.Equip(); break;
         
     case 4: return;
     }

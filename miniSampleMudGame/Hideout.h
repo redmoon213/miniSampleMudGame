@@ -15,4 +15,5 @@ public:
     void Merchant();
     
     void CharacterStatus();
+    
 };
