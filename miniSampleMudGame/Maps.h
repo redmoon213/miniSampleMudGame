@@ -18,8 +18,9 @@ public:
     void Battle(Player&);
     bool IsCleared(){return clearCheck;}
     
-    void Display(std::vector<std::unique_ptr<Monster>>&, Player&) const;
+    void Display(std::vector<std::unique_ptr<Monster>>&, Player&);
     
     void Event();
     void MapOpen();
+    void DrawGauge(std::string, int current, int max, int barlength);
 };

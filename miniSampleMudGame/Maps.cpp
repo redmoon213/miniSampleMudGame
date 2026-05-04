@@ -1,5 +1,7 @@
 ﻿#include "Maps.h"
 
+#include <iomanip>
+
 #include "MonsterFactory.h"
 #include "Orc.h"
 #include <windows.h>
@@ -118,18 +120,52 @@ void Maps::EnterNextRoom()
     roomIndex++;
 }
 
-void Maps::Display(std::vector<std::unique_ptr<Monster>>& monster, Player& player) const
+void Maps::Display(std::vector<std::unique_ptr<Monster>>& monster, Player& player) 
 {
+    std::cout << "=============================================================\n";
     for (const auto& test : monster)
     {
-        std::cout << test->GetName() << " :: " << test->GetHp()  << "\n";
+       DrawGauge(test->GetName(), test->GetHp(), test->GetMaxHp(), 20);
     }
+    std::cout << "=============================================================\n";    
+    DrawGauge(player.GetName(), player.GetHp(), player.GetMaxHp(), 20);
     
-    std::cout << player.GetName() << " :: " << player.GetHp() << "\n";
-    
+    std::cout << "-------------------------------------------------------------\n";
     for (const auto& it : player.GetSkillList())
     {
         std::cout<< it.GetName() << "(" << it.GetCurrentCooltime() << ")\n";
     }
+    std::cout << "=============================================================\n"; 
+}
+
+
+void Maps::MapOpen()
+{
     
+    
+    
+}
+
+void Maps::DrawGauge(std::string label, int current, int max, int barlength)
+{
+    const int BAR_LENGTH = barlength; // 체력바의 총 길이 (칸 수)
+    
+    // 백분율 계산 (0으로 나누기 방지)
+    float percentage = (max > 0) ? (float)current / max : 0;
+    if (percentage < 0) percentage = 0;
+    
+    int filledLength = (int)(percentage * BAR_LENGTH);
+
+    // 이름 및 라벨 출력 (10칸 고정 폭)
+    std::cout << std::left << std::setw(10) << label << " [";
+
+    // 체력바 그리기
+    for (int i = 0; i < BAR_LENGTH; ++i) {
+        if (i < filledLength) std::cout << "■"; // 채워진 칸
+        else std::cout << " ";                 // 빈 칸
+    }
+
+    // 수치 정보 출력 (현재/최대 및 퍼센트)
+    std::cout << "] " << std::setw(3) << (int)(percentage * 100) << "% "
+         << "(" << current << "/" << max << ")" << std::endl;
 }

@@ -1,11 +1,27 @@
 ﻿#include "Hideout.h"
 #include<iostream>
-void Hideout::EnterHideout()
+void Hideout::HideoutMenu()
 {
+    int input=0;
+    
+    system("cls");
+    std::cout<<"====================================================\n";
     std::cout<<"1_지도장치\n";
     std::cout<<"2_제작대\n";
     std::cout<<"3_상인\n";
     std::cout<<"4_게임종료\n";
+    
+    
+    switch (input)
+    {
+    case 1: 
+    case 2:
+    case 3:
+    case 4: 
+    default: 
+        break;
+        
+    }
 }
 
 void Hideout::MapDevice()

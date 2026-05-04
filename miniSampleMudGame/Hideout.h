@@ -3,7 +3,7 @@
 class Hideout
 {
 public:
-    void EnterHideout();
+    void HideoutMenu();
     void CraftingBench();
     void MapDevice();
     void Merchant();

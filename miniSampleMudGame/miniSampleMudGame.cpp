@@ -124,6 +124,10 @@ int main()
         if (player.IsAlive()){mapTest.EnterNextRoom();}
     }
     
+    
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     while (player.IsAlive() && !rooms[10].IsCleared())
     {
         event.EnterRoom(); // 방 입장   
