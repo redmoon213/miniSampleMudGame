@@ -54,16 +54,15 @@ void Maps::Battle(Player& player)
     {
         system("cls");
         Display(monsters,player);
-        player.Cooling();
+        
         
         int target = rand()%monsters.size();
        
         //player skill check
         if (player.CheckSkillCooldown())
         {
-            monsters[target]->TakeDamage(player.ActivateSkill());
-            
-            std::cout<<"[Test::PlayerSkill Active]\n";
+            //monsters[target]->TakeDamage(player.ActivateSkill());
+            player.ActivateSkill(monsters);
             
             Sleep(500);
         }
@@ -111,6 +110,8 @@ void Maps::Battle(Player& player)
         
         //log
         //Sleep(700);
+        
+        player.Cooling();
     }
     
 }
@@ -118,7 +119,13 @@ void Maps::Battle(Player& player)
 void Maps::EnterNextRoom()
 {
     //currentRoom = *rooms[roomIndex];
-    roomIndex++;
+    if (roomIndex == rooms.size()-1)
+    {
+        clearCheck = true;
+        return;
+    }
+        else
+        roomIndex++;
 }
 
 void Maps::Display(std::vector<std::unique_ptr<Monster>>& monster, Player& player) 
@@ -132,7 +139,7 @@ void Maps::Display(std::vector<std::unique_ptr<Monster>>& monster, Player& playe
     DrawGauge(player.GetName(), player.GetHp(), player.GetMaxHp(), 20);
     
     std::cout << "-------------------------------------------------------------\n";
-    for (const auto& it : player.GetSkillList())
+    for (auto& it : player.GetSkillList())
     {
         std::cout<< it.GetName() << "(" << it.GetCurrentCooltime() << ")\n";
     }

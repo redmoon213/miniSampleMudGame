@@ -1,6 +1,10 @@
 ﻿#include "UserSkills.h"
+#include "Player.h"
+#include "Monster.h"
+#include "SkillDB.h"
 
-UserSkills::UserSkills():name("Bash"),type(skillType::ACTIVE),baseCooltime(5), damage(5),currentCooltime(0)
+UserSkills::UserSkills(SkillDB& db)
+    :name(db.name), skillEffects(db.skillEffects), baseCooltime(db.baseCooltime), currentCooltime(0)
 {
     
 }

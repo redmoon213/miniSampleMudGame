@@ -41,5 +41,6 @@ public:
     virtual int AttackNormal();
     virtual void AttackSkill(); 
     virtual void TakeDamage(int damage);
+    virtual void Heal(int amount);
     
 };

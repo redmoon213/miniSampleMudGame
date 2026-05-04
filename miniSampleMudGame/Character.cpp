@@ -46,3 +46,8 @@ void Character::SetHp(int amount)
 {
     hp = amount;
 }
+
+void Character::Heal(int amount)
+{
+    hp = std::min(hp+amount, maxHp);
+}

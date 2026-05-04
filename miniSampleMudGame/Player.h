@@ -7,11 +7,12 @@
 #include "Item.h"
 #include "UserSkills.h"
 
+class Monster;
 enum class EquipSlot
 {
-    Helmet = 0,
+    Weapon = 0,
+    Helmet,
     Armor,
-    Weapon,
     Boots,
     Max
 };
@@ -33,16 +34,20 @@ public:
     void LevelUp();
     //void UsingSkills();
     int AttackNormal() override ;
+    
     int UsingItem();
+    
     void Cooling();
     bool CheckSkillCooldown();
-    int ActivateSkill();
+    int ActivateSkill(std::vector<std::unique_ptr<Monster>>&);
     
     std::vector<UserSkills> GetSkillList() const {return skillList;}
-    
     std::array<Item*,static_cast<int>(EquipSlot::Max)>GetEquipment(){return equipment;}
+    
+    
+    
     void Loot(std::vector<int> rewardItem);
     void Loot(int rewardItem);
     
-    void Equip();
+    //void Equip();
 };

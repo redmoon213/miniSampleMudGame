@@ -175,6 +175,7 @@
     <ClCompile Include="Preset.cpp" />
     <ClCompile Include="RanderManger.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="SkillDB.cpp" />
     <ClCompile Include="UserSkills.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
@@ -200,6 +201,7 @@
     <ClInclude Include="Preset.h" />
     <ClInclude Include="RanderManger.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="SkillDB.h" />
     <ClInclude Include="UserSkills.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>

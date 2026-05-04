@@ -19,5 +19,5 @@ private:
 public:
     Item(std::string name, ItemType type);
     std::string GetName(){return name;}
-    ItemType GetType(){return type;}
+    ItemType GetType(){return type;} 
 };

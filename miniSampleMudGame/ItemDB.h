@@ -2,9 +2,12 @@
 #include <string>
 #include <unordered_map>
 
+
+
 struct ItemDB
 {
     std::string name;
+    std::string skillName;
     
     
 public:

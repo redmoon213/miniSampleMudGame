@@ -1,10 +1,15 @@
 ﻿#include "Player.h"
+#include "Monster.h"
+#include "SkillDB.h"
 
 Player::Player(std::string name, int str, int dex, int intel, int lv)
     :Character(name, str, dex, intel), level(lv), exp(0), maxExp(level*50)
 {
-    skillList.push_back(UserSkills());
+    auto db = CreateSkillDB();
+    skillList.push_back(UserSkills(db["강타"]));
+    skillList.push_back(UserSkills(db["회전베기"]));
     equipment.fill(nullptr);
+    equipment.at(static_cast<int>(EquipSlot::Weapon)) = new Item("나무검", ItemType::Weapon);
 }
 
 void Player::GainExp(int expGain)
@@ -28,14 +33,12 @@ void Player::LevelUp()
         std::cout <<">> 올릴 능력치를 입력하세요 | 남은 포인트 : " << 2-i <<"\n";
         std::cout <<"1.힘, 2.민첩 3.지능\n";
         std::cin>>input;
-        std::cout <<"\033[J";
         switch (input)
         {
         case 1: strength ++;break;
         case 2: dexterity ++;break;
         case 3: intelligence ++;break;
         }
-        printf("\033[19;1H\033[J");
     }
     StatSetting();
     hp=maxHp;
@@ -66,55 +69,12 @@ void Player::Loot(int rewardItem)
     inventory[rewardItem]++;
     std::cout << "아이템을 획득하였습니다!\n";
     std::cout<< itemList[rewardItem] << "\n";*/
-    
 }
 
 int Player::UsingItem()
 {
-    int outputCount = 1;
-    int itemCount = 0;
-    int input =0;
-    int damage = 0;
-    std::vector<int> temp;
-    std::cout << ">>사용할 아이템을 입력해주세요.\n";
-    
-    for (int inventoryIndex =0; inventoryIndex<inventory.size(); inventoryIndex++)
-    {
-        if (inventory[inventoryIndex]!=0)
-        {
-            std::cout << outputCount << ". " << itemList[inventoryIndex] << " X " << inventory[inventoryIndex] << "  |  ";
-            switch (inventoryIndex)
-            {
-            case 2: 
-                std::cout << "5의 데미지를 줍니다 \n";
-                break;
-            case 3:
-                std::cout << "모든 mp를 소모하여 소모한 값에 비례한 큰 데미지를 줍니다. \n"; 
-                break;
-            case 4:
-                std::cout << "민첩에 비례하는 데미지를 줍니다. \n";
-                break;
-                
-            }
-            
-            
-            temp.push_back(inventoryIndex);
-            outputCount++;
-        }
-    }
-    std::cin >> input;
-    if (temp[input-1] != 0)
-    {
-        switch (temp[input-1])
-        {
-            case 2 : damage = 5; inventory[temp[input-1]]--; break;
-            case 3 : damage = mp * 1; mp = 0; inventory[temp[input-1]]--; break;
-            case 4 : damage = dexterity * 3; inventory[temp[input-1]]--; break;
-            default: std::cout<<"올바르지 않은 입력입니다.\n"; break;
-        }
-    }
-    
-    return damage;
+    ////
+   return 0;
 }
 
 void Player::Cooling()
@@ -135,14 +95,51 @@ bool Player::CheckSkillCooldown()
     return false;
 }
 
-int Player::ActivateSkill()
+int Player::ActivateSkill(std::vector<std::unique_ptr<Monster>>& monsters)
 {
+    std::vector<Monster> targetList;
+    srand(time(NULL));
+    
    for (auto& it : skillList)
    {
        if (it.IsReady())
        {
            it.SetCurrentCooltime(it.GetBaseCooltime());
-           return it.GetDamage();
+           
+           //싱글타겟 멀티타겟 체크
+           for (auto& skills : it.GetSkillEffects())
+           {
+               if (skills.type==EffectType::SingleTarget)
+               {
+                   targetList.push_back(*monsters[rand()%monsters.size()]);
+               }
+               else if (skills.type==EffectType::MultiTarget)
+               {
+                   for (auto& i : monsters)
+                   targetList.push_back(*i);
+               }
+           }
+           
+           //데미지 or 힐 체크
+           for (auto& skills : it.GetSkillEffects())
+           {
+               if (skills.type==EffectType::Damage)
+               {
+                   for (auto& target: targetList)
+                   {
+                       target.TakeDamage(skills.value + dexterity * 1.5);
+                       
+                   }
+               }
+               
+               if (skills.type==EffectType::Heal)
+               {
+                   Heal(skills.value);
+               }
+           }
+           
+           std::cout << "[" << it.GetName() << "] !! \n"; 
+           break;
        }
    }
     return 0;

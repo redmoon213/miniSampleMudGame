@@ -1,30 +1,42 @@
 ﻿#pragma once
 #include <string>
+#include <vector>
 
-enum class skillType
+
+struct SkillDB;
+
+enum class EffectType
 {
-    ACTIVE, PASSIVE
+    Active, Passive, SingleTarget, MultiTarget, Damage, Heal
+};
+
+struct SkillEffect
+{
+    EffectType type;
+    int value;
 };
 
 class UserSkills
 {
     std::string name;
-    skillType type;
+    std::vector <SkillEffect> skillEffects;
+    
     std::string skillText;
     int baseCooltime;
     int currentCooltime;
-    int damage;
     
 public:
-    UserSkills();
+    UserSkills(SkillDB&);
     std::string GetName() const {return name;}
     std::string GetSkillText() const {return skillText;}
     bool IsReady() const;
     void DecreaseCooltime();
-    int GetDamage() const{return damage;}
+    //int GetDamage() const{return damage;}
     int GetBaseCooltime() const{return baseCooltime;}
     int GetCurrentCooltime() const{return currentCooltime;}
-    
     void SetCurrentCooltime(int cooltime){currentCooltime = cooltime;}
+    
+    std::vector<SkillEffect> GetSkillEffects() const {return skillEffects;}
+    //void UseSkill(Player& player, Monster& monster);
     
 };
