@@ -4,7 +4,7 @@ Player::Player(std::string name, int str, int dex, int intel, int lv)
     :Character(name, str, dex, intel), level(lv), exp(0), maxExp(level*50)
 {
     skillList.push_back(UserSkills());
-    
+    equipment.fill(nullptr);
 }
 
 void Player::GainExp(int expGain)

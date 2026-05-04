@@ -12,8 +12,9 @@ private:
     int roomIndex;
     Preset presets;
     bool clearCheck;
+    Player& player;
 public:
-    Maps(Preset&, bool check = false);
+    Maps(Player& playerInput, Preset&, bool check = false);
     void EnterNextRoom();
     void Battle(Player&);
     bool IsCleared(){return clearCheck;}

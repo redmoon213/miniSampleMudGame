@@ -1,12 +1,13 @@
 ﻿#include "Maps.h"
-
 #include <iomanip>
-
 #include "MonsterFactory.h"
-#include "Orc.h"
 #include <windows.h>
-Maps::Maps(Preset& presetInput, bool isclear):presets(presetInput), clearCheck(isclear)
+
+
+Maps::Maps(Player& playerInput, Preset& presetInput, bool isclear)
+:player(playerInput),presets(presetInput), clearCheck(isclear)
 {
+    
     rooms.push_back(std::make_unique<Room>("시작지점", 0, false));
     
     for (int i =1; i<presetInput.GetMapSize()-1; i++)
