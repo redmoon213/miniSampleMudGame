@@ -19,6 +19,8 @@ void Hideout::HideoutMenu()
     int input=0;
     auto& instance = GameManager::getGameManager();
     
+    player.SetHp(player.GetMaxHp());
+    
     system("cls");
     std::cout<<"====================================================\n";
     std::cout<<"1_캐릭터\n";

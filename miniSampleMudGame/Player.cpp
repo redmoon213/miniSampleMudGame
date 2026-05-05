@@ -58,21 +58,21 @@ int Player::AttackNormal()
 
 void Player::Loot(std::vector<int> rewardItem)
 {
-    std::cout << "아이템을 획득하였습니다!\n";
     
+    auto db = ItemDB::CreateItemDB();
+    std::cout << "아이템을 획득하였습니다!\n";
+   
     for (int item: rewardItem)
     {
-        inventory[item]++;
-        std::cout<< itemList[item] << "\n";
-       
+        std::cout << "[" << db[item].name << "]\n";
+        inventory.push_back(new Item(db[item]));
     }
 }
 
-void Player::Loot(int rewardItem)
-{/*
-    inventory[rewardItem]++;
-    std::cout << "아이템을 획득하였습니다!\n";
-    std::cout<< itemList[rewardItem] << "\n";*/
+void Player::Loot(int goldAmount)
+{
+    gold+=goldAmount;
+    std::cout<<"[" << goldAmount << "골드]\n";
 }
 
 int Player::UsingItem()
@@ -101,7 +101,7 @@ bool Player::CheckSkillCooldown()
 
 int Player::ActivateSkill(std::vector<std::unique_ptr<Monster>>& monsters)
 {
-    std::vector<Monster> targetList;
+    std::vector<Monster*> targetList;
     srand(time(NULL));
     
    for (auto& it : skillList)
@@ -115,12 +115,12 @@ int Player::ActivateSkill(std::vector<std::unique_ptr<Monster>>& monsters)
            {
                if (skills.type==EffectType::SingleTarget)
                {
-                   targetList.push_back(*monsters[rand()%monsters.size()]);
+                   targetList.push_back(monsters[rand()%monsters.size()].get());
                }
                else if (skills.type==EffectType::MultiTarget)
                {
                    for (auto& i : monsters)
-                   targetList.push_back(*i);
+                   targetList.push_back(i.get());
                }
            }
            
@@ -131,7 +131,7 @@ int Player::ActivateSkill(std::vector<std::unique_ptr<Monster>>& monsters)
                {
                    for (auto& target: targetList)
                    {
-                       target.TakeDamage(skills.value + dexterity * 1.5);
+                       target->TakeDamage(skills.value + dexterity * 1.5);
                        
                    }
                }
@@ -213,14 +213,39 @@ void Player::Equip()
 
     // 5. 장착 로직 (교체)
     if (equipment[selectedSlotIdx] != nullptr) {
-        // 기존 장비가 있으면 다시 인벤토리에 넣기 (원하는 기획에 따라 선택)
+        // 기존 장비가 있으면 다시 인벤토리에 넣기 
         inventory.push_back(equipment[selectedSlotIdx]);
+        RemoveSkill(equipment[selectedSlotIdx]->GetSkillName());
     }
 
     // 장비창에 넣고 인벤토리에서 제거
     equipment[selectedSlotIdx] = itemToEquip;
+    AddSkill(itemToEquip->GetSkillName());
     inventory.erase(inventory.begin() + inventoryIdx);
 
     std::cout << "\n장착이 완료되었습니다!\n";
     system("pause");
+}
+
+
+void Player::AddSkill(std::string skillName)
+{
+    auto db = SkillDB::CreateSkillDB();
+    
+    if (db.find(skillName) != db.end())
+    {
+        skillList.push_back(UserSkills(db[skillName]));
+    }
+}
+
+void Player::RemoveSkill(std::string skillName)
+{
+    for (auto it = skillList.begin(); it != skillList.end(); ++it)
+    {
+        if (it->GetName() == skillName)
+        {
+            skillList.erase(it);
+            break;
+        }
+    }
 }

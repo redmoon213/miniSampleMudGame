@@ -10,7 +10,7 @@ Monster::Monster(std::string newName, int str, int dex, int intel, int exp, std:
 
 
 Monster::Monster(MonsterDB db)
-    :Character(db.name, db.str, db.dex, db.vit)
+    :Character(db.name, db.str, db.dex, db.vit), expReward(50), itemReward(db.dropPool), dropGold(db.dropGold)
 {
     
 }

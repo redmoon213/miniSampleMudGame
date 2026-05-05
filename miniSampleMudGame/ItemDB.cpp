@@ -8,9 +8,9 @@ std::unordered_map<int, ItemDB> ItemDB::CreateItemDB()
     //1~100 : 장비
     db[1] = {"나무검",ItemType::Weapon, "강타"};
     db[2] = {"철검", ItemType::Weapon,"강타"};
-    db[3] = {"흡혈검",ItemType::Weapon, "흡혈의강타"};
+    db[3] = {"흡혈귀의검",ItemType::Weapon, "흡혈의강타"};
     
-    db[21] = {"가죽투구",ItemType::Helmet,""};
+    db[21] = {"가죽투구",ItemType::Helmet,"응급처치"};
     db[22] = {"철투구",ItemType::Helmet,""};
     db[23] = {"백금투구",ItemType::Helmet,""};
     

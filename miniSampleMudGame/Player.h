@@ -26,6 +26,7 @@ private:
     std::vector<Item*> inventory;
     std::vector<UserSkills> skillList;
     std::array<Item*, static_cast<int>(EquipSlot::Max)> equipment;
+    int gold;
     
 public:
     Player(std::string name, int str, int dex, int intelligence, int level = 1);
@@ -48,10 +49,14 @@ public:
     
     
     void Loot(std::vector<int> rewardItem);
-    void Loot(int rewardItem);
+    void Loot(int gold);
+    
+    int GetGold(){return gold;}
+    
     
     //void Equip();
     
-    int GetEquipIndex(EquipSlot slot, int visualIndex);
+    void AddSkill(std::string);
+    void RemoveSkill(std::string);
     
 };

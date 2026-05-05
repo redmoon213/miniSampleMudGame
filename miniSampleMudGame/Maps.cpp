@@ -24,6 +24,18 @@ void Maps::Battle(Player& player)
 {
     /////////////////////////////////////////////////////////////////////////////////////////////////////////
     std::vector<std::unique_ptr<Monster>> monsters;
+    auto mDB = CreateMonsterDB();
+    
+    //몬스터DB에서 랜덤으로 몬스터를 뽑기 위해 인덱스 저장
+    std::vector<int> monsterDBIndex;
+    for (auto const& it : mDB)
+    {
+        monsterDBIndex.push_back(it.first);
+    }
+    
+    
+    std::vector<int> dropItemTemp;
+    int dropGoldTemp =0;
     
     //set monster numb, get preset, 1~3
     
@@ -43,8 +55,9 @@ void Maps::Battle(Player& player)
     for (int i = 0; i<monsterNumber; i++)
     {
         monsterType mType = static_cast<monsterType>(rand()%static_cast<int>(monsterType::LASTBOSS));
-      
-        monsters.push_back(MonsterFactory::GenerateMonster(mType));
+        
+       // monsters.push_back(MonsterFactory::GenerateMonster(mType));
+        monsters.push_back(MonsterFactory::GenerateMonster(mDB[monsterDBIndex[rand()%monsterDBIndex.size()]]));
         //preset, choose monster 
         
     }
@@ -79,6 +92,8 @@ void Maps::Battle(Player& player)
         //target monster isalive check  
         if (!monsters[target]->IsAlive())
         {
+            dropItemTemp.push_back(monsters[target]->GetItemReward()[rand()%monsters[target]->GetItemReward().size()]);
+            dropGoldTemp += monsters[target]->GetDropGold();
             std::cout << monsters[target]->GetName() << "을 처치했습니다!\n";
             monsters.erase(monsters.begin() + target);
         }
@@ -105,6 +120,13 @@ void Maps::Battle(Player& player)
             //victory
             //loot
             //exp
+            
+            player.Loot(dropItemTemp);
+            player.Loot(dropGoldTemp);
+            system("pause");
+            
+            
+            
         }
         Sleep(700);
         
@@ -130,10 +152,16 @@ void Maps::EnterNextRoom()
 
 void Maps::Display(std::vector<std::unique_ptr<Monster>>& monster, Player& player) 
 {
+    int temp = 4;
     std::cout << "=============================================================\n";
     for (const auto& test : monster)
     {
        DrawGauge(test->GetName(), test->GetHp(), test->GetMaxHp(), 20);
+        temp--;
+    }
+    for (int i = 0; i<temp; i++)
+    {
+        std::cout << "\n";
     }
     std::cout << "=============================================================\n";    
     DrawGauge(player.GetName(), player.GetHp(), player.GetMaxHp(), 20);

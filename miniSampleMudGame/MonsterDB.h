@@ -13,7 +13,8 @@ public:
     int dex;
     int vit;
     
-    //std::vector<int>dropPool;
+    std::vector<int>dropPool;
+    int dropGold;
 };
 
 std::unordered_map<int, MonsterDB> CreateMonsterDB();
