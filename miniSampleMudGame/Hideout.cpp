@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include "GameManager.h"
+#include "ItemDB.h"
 #include "Maps.h"
 
 Hideout::Hideout(Player& playerInput):player(playerInput){}
@@ -72,6 +73,54 @@ void Hideout::MapDevice()
 
 void Hideout::Merchant()
 {
+    srand(time(NULL));
+    auto db = ItemDB::CreateItemDB();
+    std::vector<std::vector<int>>sellList;
+    std::vector<int>temp;
+    int tempIndex =0;
+    int price =0;
+    int count = 0;
+    for (auto& it:db)
+    {
+        price = rand()%2000 +500;
+        temp.push_back(it.first);
+        temp.push_back(price);
+        
+        sellList.push_back(temp);
+        temp.clear();
+        count ++;
+    }
+    
+    
+    system("cls");
+    std::vector<std::vector<int>>displayItem;
+    std::cout << "=============================================================\n";
+    for (int i =0; i<5; i++)
+    {
+        //std::cout<< db[temp[rand()%temp.size()]].name << "\n";
+        int randNum = rand()%count;
+        displayItem.push_back(sellList[randNum]);
+        
+        std::cout<< i+1 << "_[" << db[displayItem[i][0]].name << "]  :  ";
+        std::cout<< "[" << displayItem[i][1] << " Gold]\n";
+    }
+    std::cout << "=============================================================\n";
+    int input = 0;
+    std::cout<< "<구매할 아이템을 입력해주세요. (보유금액 : " << player.GetGold() << ")\n";
+    std::cin>>input;
+    if (player.GetGold() >= displayItem[input-1][1])
+    {
+        std::vector<int>buyTemp;
+        buyTemp.push_back(displayItem[input-1][0]);
+        player.Loot(buyTemp);
+        player.SetGold(player.GetGold() - displayItem[input-1][1]);
+        std::cout <<"구매 완료!\n";
+    }
+    else
+    {
+        std::cout<<"보유하고 있는 골드가 부족합니다.\n";
+    }
+    system("pause");
     
 }
 

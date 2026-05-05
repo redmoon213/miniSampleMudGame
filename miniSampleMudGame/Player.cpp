@@ -152,7 +152,7 @@ int Player::ActivateSkill(std::vector<std::unique_ptr<Monster>>& monsters)
 
 void Player::Equip()
 {
-    system("cls"); // 화면 깔끔하게 정리
+    system("cls"); 
     std::cout << "=============================================================\n";
     std::cout << "<착용중인 장비>\n";
     
